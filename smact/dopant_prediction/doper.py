@@ -306,7 +306,7 @@ class Doper:
         # return the top (num_dopants) results for each case
         return self.results
 
-    def plot_dopants(self) -> None:
+    def plot_dopants(self, cmap="YlOrRd") -> None:
         """
         Plot the dopant suggestions using the periodic table heatmap.
         Args:
@@ -332,7 +332,7 @@ class Doper:
                 }
             plotting.periodic_table_heatmap(
                 elemental_data=dict_results,
-                cmap="rainbow",
+                cmap=cmap,
                 blank_color="gainsboro",
                 edge_color="white",
             )
