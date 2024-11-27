@@ -2,7 +2,7 @@ import os
 import unittest
 
 import smact
-from smact.dopant_prediction import doper
+from SMACT.smact.dopant_prediction import doper
 from smact.structure_prediction import mutation, utilities
 
 files_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), "files")

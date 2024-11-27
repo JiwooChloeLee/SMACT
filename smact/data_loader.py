@@ -13,7 +13,7 @@ are used in the background and it is not necessary to use them directly.
 import csv
 import os
 
-from smact import data_directory
+from . import data_directory
 
 # Module-level switch: print "verbose" warning messages
 # about missing data.

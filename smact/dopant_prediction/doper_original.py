@@ -258,13 +258,13 @@ class Doper:
                     )
         dopants_lists = [n_type_cat, p_type_cat, n_type_an, p_type_an]
 
-        # sort by Similarity
+        # sort by probability
         for dopants_list in dopants_lists:
             dopants_list.sort(key=lambda x: x[2], reverse=True)
 
         self.len_list = 3
         if get_selectivity:
-            self.len_list = 5
+            self.len_list = 4
             for i in range(len(dopants_lists)):
                 sub = "cation"
                 if i > 1:
@@ -272,17 +272,6 @@ class Doper:
                 dopants_lists[i] = self._get_selectivity(
                     dopants_lists[i], cations, sub
                 )
-
-            for dopants_list in dopants_lists:
-                for dopant in dopants_list:
-                    similarity = dopant[2]  
-                    selectivity = dopant[3] 
-                    combined_score = self._calculate_combined_score(similarity, selectivity)
-                    dopant.append(combined_score)  
-
-            # sort by combined score
-            for dopants_list in dopants_lists:
-                dopants_list.sort(key=lambda x: x[4], reverse=True)
 
         # if groupby
         groupby_lists = [
@@ -360,13 +349,11 @@ class Doper:
                 # norm=norm,  # apply normalization
             )
 
+
     def _format_number(self, num_str):
         num = int(num_str)
         sign = "+" if num >= 0 else "-"
         return f"{abs(num)}{sign}"
-
-    def _calculate_combined_score(self, similarity: float, selectivity: float) -> float:
-        return (1 - 0.25) * similarity + 0.25 * selectivity
 
     @property
     def to_table(self):
@@ -374,9 +361,9 @@ class Doper:
             print("No data available")
             return
         if self.use_probability:
-            headers = ["Rank", "Dopant", "Host", "Probability", "Selectivity", "Combined"]
+            headers = ["Rank", "Dopant", "Host", "Probability", "Selectivity"]
         else:
-            headers = ["Rank", "Dopant", "Host", "Similarity", "Selectivity", "Combined"]
+            headers = ["Rank", "Dopant", "Host", "Similarity", "Selectivity"]
         for dopant_type, dopants in self.results.items():
             print(str(dopant_type))
             for k, v in dopants.items():

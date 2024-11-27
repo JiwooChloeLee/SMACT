@@ -16,7 +16,8 @@ from pymatgen.transformations.standard_transformations import (
     OxidationStateDecorationTransformation,
 )
 
-import smact
+# from SMACT import smact
+from .. import Species
 
 from . import logger
 from .utilities import convert_next_gen_mprest_data, get_sign
@@ -50,7 +51,7 @@ class SmactStructure:
 
     def __init__(
         self,
-        species: List[Union[Tuple[str, int, int], Tuple[smact.Species, int]]],
+        species: List[Union[Tuple[str, int, int], Tuple[Species, int]]],
         lattice_mat: np.ndarray,
         sites: Dict[str, List[List[float]]],
         lattice_param: Optional[float] = 1.0,
@@ -116,7 +117,7 @@ class SmactStructure:
 
     @staticmethod
     def _sanitise_species(
-        species: List[Union[Tuple[str, int, int], Tuple[smact.Species, int]]],
+        species: List[Union[Tuple[str, int, int], Tuple[Species, int]]],
     ) -> List[Tuple[str, int, int]]:
         """Sanitise and format a list of species.
 
@@ -156,7 +157,7 @@ class SmactStructure:
             sanit_species = species
 
         elif isinstance(
-            species[0][0], smact.Species
+            species[0][0], Species
         ):  # Species class variation of instantiation
             species.sort(key=lambda x: (x[0].symbol, -x[0].oxidation))
             sanit_species = [
@@ -298,7 +299,7 @@ class SmactStructure:
 
     @staticmethod
     def from_mp(
-        species: List[Union[Tuple[str, int, int], Tuple[smact.Species, int]]],
+        species: List[Union[Tuple[str, int, int], Tuple[Species, int]]],
         api_key: str,
         determine_oxi: str = "BV",
     ):

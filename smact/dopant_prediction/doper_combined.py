@@ -275,10 +275,10 @@ class Doper:
 
             for dopants_list in dopants_lists:
                 for dopant in dopants_list:
-                    similarity = dopant[2]  
-                    selectivity = dopant[3] 
+                    similarity = dopant[2]  # 유사도
+                    selectivity = dopant[3]  # 선택도
                     combined_score = self._calculate_combined_score(similarity, selectivity)
-                    dopant.append(combined_score)  
+                    dopant.append(combined_score)  # 도펀트에 결합된 점수를 추가합니다.
 
             # sort by combined score
             for dopants_list in dopants_lists:
@@ -338,7 +338,7 @@ class Doper:
 
         for dopant_type, dopants in self.results.items():
             # due to selectivity option
-            if self.len_list == 4:
+            if self.len_list == 3:
                 dict_results = {
                     utilities.parse_spec(x)[0]: y
                     for x, _, y in dopants.get("sorted")
@@ -366,6 +366,16 @@ class Doper:
         return f"{abs(num)}{sign}"
 
     def _calculate_combined_score(self, similarity: float, selectivity: float) -> float:
+        """
+        유사도(similarity)와 선택도(selectivity)를 결합하여 새로운 점수를 계산하는 함수.
+        Args:
+            similarity (float): 유사도 값.
+            selectivity (float): 선택도 값.
+
+        Returns:
+            float: 결합된 점수.
+        """
+
         return (1 - 0.25) * similarity + 0.25 * selectivity
 
     @property

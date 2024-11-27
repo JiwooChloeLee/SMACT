@@ -16,7 +16,7 @@ import pandas as pd
 module_directory = path.abspath(path.dirname(__file__))
 data_directory = path.join(module_directory, "data")
 # get correct path for datafiles when called from another directory
-from smact import data_loader
+from . import data_loader
 
 
 class Element:
