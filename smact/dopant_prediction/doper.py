@@ -321,7 +321,7 @@ class Doper:
 
 
 
-    def plot_dopants(self, cmap: str = "YlOrRd") -> None:
+    def plot_dopants(self, cmap: str = "YlOrRd", plot_value: str = "probability") -> None:
         """
         Plot the dopant suggestions using the periodic table heatmap.
         Args:
@@ -344,21 +344,30 @@ class Doper:
                     for x, _, y in dopants.get("sorted")
                 }
             else:
-                dict_results = {
-                    utilities.parse_spec(x)[0]: y
-                    for x, _, y, _ in dopants.get("sorted")
-                }
+                if plot_value == "probability":
+                    dict_results = {
+                        utilities.parse_spec(x)[0]: y
+                        for x, _, y, _, _ in dopants.get("sorted")
+                    }
+                elif plot_value == "combined":
+                    dict_results = {
+                        utilities.parse_spec(x)[0]: y
+                        for x, _, _, _, y in dopants.get("sorted")
+                    }
+                else:
+                    raise NotImplementedError("plot_value should be either probability or combined.")
 
             periodic_table_heatmap(
                 elemental_data=dict_results,
                 cmap=cmap,
                 blank_color="gainsboro",
                 edge_color="white",
-                cmap_range=(0, 1)
+                # cmap_range=(0, 1)
                 # vmin=vmin,  # set min scale
                 # vmax=vmax,  # set max scale
                 # norm=norm,  # apply normalization
             )
+
 
     def _format_number(self, num_str):
         num = int(num_str)

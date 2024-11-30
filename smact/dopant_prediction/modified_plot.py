@@ -108,8 +108,10 @@ def periodic_table_heatmap(
         cmap=cmap,
         edgecolors=edge_color,
         linewidths=1,
-        vmin=min_val - 0.001,
-        vmax=max_val + 0.001,
+        # vmin=min_val - 0.001,
+        # vmax=max_val + 0.001,
+        vmin=min_val,
+        vmax=max_val,
     )
     cbar = fig.colorbar(heatmap)
 
